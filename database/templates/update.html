@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Update Record</title>
+</head>
+<body>
+
+  <h1>Update Student Record</h1>
+
+  <form action="{{ url_for('update') }}" method="post">
+      <label for="reg_number">Enter Reg Number to Retrieve:</label>
+      <input type="text" name="reg_number" required>
+      <button type="submit">Retrieve Record</button>
+  </form>
+
+  <!-- Display the fetched record if available -->
+  {% if record %}
+      <form action="{{ url_for('update_record', reg_number=record.reg_number) }}" method="post">
+          <input type="hidden" name="reg_number" value="{{ record.reg_number }}">
+
+          <label for="name">Name:</label>
+          <input type="text" name="name" value="{{ record.name }}" required>
+
+          <label for="email">Email:</label>
+          <input type="email" name="email" value="{{ record.email }}" required>
+
+          <label for="contact">Contact:</label>
+          <input type="text" name="contact" value="{{ record.contact }}" required>
+
+          <label for="sex">Sex:</label>
+          <select name="sex" required>
+              <option value="Male" {% if record.sex == 'Male' %}selected{% endif %}>Male</option>
+              <option value="Female" {% if record.sex == 'Female' %}selected{% endif %}>Female</option>
+          </select>
+
+          <button type="submit">Update Record</button>
+      </form>
+  {% endif %}
+
+</body>
+</html>

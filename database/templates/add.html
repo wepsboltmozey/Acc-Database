@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Records</title>
+</head>
+<body>
+    <h1>Student Records</h1>
+
+    <!-- flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- adding new records -->
+    <form action="{{ url_for('add') }}" method="post">
+        <label for="reg_number">Reg Number:</label>
+        <input type="text" name="reg_number" required>
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>
+
+        <label for="contact">Contact:</label>
+        <input type="text" name="contact" required>
+
+        <label for="sex">Sex:</label>
+        <select name="sex" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <button type="submit">Add Record</button>
+    </form>
+
+    <!-- Display existing records -->
+    <table>
+        <thead>
+            <tr>
+                <th>Reg Number</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Sex</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+                <tr>
+                    <td>{{ record.reg_number }}</td>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.email }}</td>
+                    <td>{{ record.contact }}</td>
+                    <td>{{ record.sex }}</td>
+                   
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+    
+    <a href="{{ url_for('update') }}"><button type="button">Update Record</button></a>
+
+</body>
+</html>
